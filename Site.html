@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quer namorar comigo?</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    position: relative;
+    max-width: 95%;
+  }
+
+  h1 {
+    color: red;
+    font-size: 2em;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .buttons {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    height: 120px;
+  }
+
+  button {
+    position: absolute;
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    touch-action: manipulation;
+  }
+
+  #sim {
+    left: 60px;
+    top: 40px;
+    background-color: rgb(0, 255, 128);
+  }
+
+  #nao {
+    left: 180px;
+    top: 40px;
+    background-color: rgb(255, 80, 80);
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5em; }
+    button { padding: 12px 25px; font-size: 16px; }
+    .buttons { width: 250px; height: 100px; }
+    #sim { left: 40px; }
+    #nao { left: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="titulo">Quer namorar comigo?</h1>
+  <div class="buttons">
+    <button id="sim">Sim</button>
+    <button id="nao">Não</button>
+  </div>
+</div>
+
+<script>
+const nao = document.getElementById('nao');
+const sim = document.getElementById('sim');
+const titulo = document.getElementById('titulo');
+
+// função para gerar posição aleatória perto do título
+function gerarPosicao() {
+  const tituloRect = titulo.getBoundingClientRect();
+  const largura = nao.offsetWidth;
+  const altura = nao.offsetHeight;
+
+  const minX = tituloRect.left;
+  const maxX = tituloRect.right - largura;
+  const minY = tituloRect.top;
+  const maxY = tituloRect.bottom + 40; // um pouco abaixo do texto
+
+  const novaX = Math.random() * (maxX - minX) + minX;
+  const novaY = Math.random() * (maxY - minY) + minY;
+
+  return { x: novaX, y: novaY };
+}
+
+// função para mover o botão "Não"
+function moverNao() {
+  const pos = gerarPosicao();
+  nao.style.left = `${pos.x}px`;
+  nao.style.top = `${pos.y}px`;
+}
+
+// eventos PC: mouse sobre o botão
+nao.addEventListener('mouseenter', moverNao);
+
+// eventos celular: toque
+nao.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  moverNao();
+}, { passive: false });
+
+// Botão "Sim" abre o link
+sim.addEventListener('click', () => {
+  window.location.href = 'https://www.youtube.com/watch?v=pQzTBdeUNlU';
+});
+sim.addEventListener('touchstart', () => {
+  window.location.href = 'https://www.youtube.com/watch?v=pQzTBdeUNlU';
+}, { passive: false });
+</script>
+
+</body>
+</html>
